@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Characters/GASCharacterMain.h"
+#include "GAS/Public/Characters/GASCharacterMain.h"
 
 // Sets default values
 AGASCharacterMain::AGASCharacterMain()
