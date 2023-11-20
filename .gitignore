@@ -15,3 +15,19 @@
 /dataSources/
 /dataSources.local.xml
 
+Binaries
+DerivedDataCache
+Intermediate
+Saved
+Build
+
+.vscode
+.vs
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
