@@ -8,14 +8,15 @@ public class GAS : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {
 			"Slate",
 			"SlateCore",
 			"GameplayAbilities",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks",
+			"AIModule"
 		});
 
 		// Uncomment if you are using Slate UI
