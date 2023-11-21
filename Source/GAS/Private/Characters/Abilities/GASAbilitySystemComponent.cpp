@@ -3,7 +3,7 @@
 
 #include "Characters/Abilities/GASAbilitySystemComponent.h"
 
-void Agas::ReceiveDamage(Agas * SourceASC, float UnmitigatedDamage, float MitigatedDamage)
+void UGASAbilitySystemComponent::ReceiveDamage(UGASAbilitySystemComponent * SourceASC, float UnmitigatedDamage, float MitigatedDamage)
 {
 	ReceivedDamage.Broadcast(SourceASC, UnmitigatedDamage, MitigatedDamage);
 }

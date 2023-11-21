@@ -5,15 +5,13 @@
 #include "Characters/Abilities/GASAbilitySystemComponent.h"
 #include "Characters/Abilities/GASGameplayAbility.h"
 #include "Characters/GASCharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Characters/Heroes/Abilities/GASGA_FireGun.h"
+#include "CapsuleTypes.h"
 #include "GAS/Public/Characters/GASCharacterMain.h"
 
 // Sets default values
-// AGASCharacterMain::AGASCharacterMain()
-// {
-//  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-// 	PrimaryActorTick.bCanEverTick = true;
-//
-// }
+
 
 AGASCharacterMain::AGASCharacterMain(const class FObjectInitializer& ObjectInitializer) :
 	Super(ObjectInitializer.SetDefaultSubobjectClass<UGASCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -75,7 +73,7 @@ void AGASCharacterMain::RemoveCharacterAbilities()
 	AbilitySystemComponent->bCharacterAbilitiesGiven = false;
 }
 
-EGDHitReactDirection AGASCharacterMain::GetHitReactDirection(const FVector & ImpactPoint)
+EGASHitReactDirection AGASCharacterMain::GetHitReactDirection(const FVector & ImpactPoint)
 {
 	const FVector& ActorLocation = GetActorLocation();
 	// PointPlaneDist is super cheap - 1 vector subtraction, 1 dot product.
@@ -90,11 +88,11 @@ EGDHitReactDirection AGASCharacterMain::GetHitReactDirection(const FVector & Imp
 		// Can see if it's left or right of Left/Right plane which would determine Front or Back
 		if (DistanceToRightLeftPlane >= 0)
 		{
-			return EGDHitReactDirection::Front;
+			return EGASHitReactDirection::Front;
 		}
 		else
 		{
-			return EGDHitReactDirection::Back;
+			return EGASHitReactDirection::Back;
 		}
 	}
 	else
@@ -103,15 +101,15 @@ EGDHitReactDirection AGASCharacterMain::GetHitReactDirection(const FVector & Imp
 
 		if (DistanceToFrontBackPlane >= 0)
 		{
-			return EGDHitReactDirection::Right;
+			return EGASHitReactDirection::Right;
 		}
 		else
 		{
-			return EGDHitReactDirection::Left;
+			return EGASHitReactDirection::Left;
 		}
 	}
 
-	return EGDHitReactDirection::Front;
+	return EGASHitReactDirection::Front;
 }
 
 void AGASCharacterMain::PlayHitReact_Implementation(FGameplayTag HitDirection, AActor * DamageCauser)
@@ -120,19 +118,19 @@ void AGASCharacterMain::PlayHitReact_Implementation(FGameplayTag HitDirection, A
 	{
 		if (HitDirection == HitDirectionLeftTag)
 		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Left);
+			ShowHitReact.Broadcast(EGASHitReactDirection::Left);
 		}
 		else if (HitDirection == HitDirectionFrontTag)
 		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Front);
+			ShowHitReact.Broadcast(EGASHitReactDirection::Front);
 		}
 		else if (HitDirection == HitDirectionRightTag)
 		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Right);
+			ShowHitReact.Broadcast(EGASHitReactDirection::Right);
 		}
 		else if (HitDirection == HitDirectionBackTag)
 		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Back);
+			ShowHitReact.Broadcast(EGASHitReactDirection::Back);
 		}
 	}
 }

@@ -2,12 +2,12 @@
 
 
 #include "..\..\..\Public\Characters\Abilities\GASGA_CharacterJump.h"
-#include "Characters/GDCharacterBase.h"
+#include "Characters/GASCharacterMain.h"
 #include "Gas/Gas.h"
 
 UGASGA_CharacterJump::UGASGA_CharacterJump()
 {
-	AbilityInputID = EGDAbilityInputID::Jump;
+	AbilityInputID = EGASAbilityInputID::Jump;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::NonInstanced;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Jump")));
 

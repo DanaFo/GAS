@@ -33,7 +33,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Gas|Camera")
 	FVector GetStartingCameraBoomLocation();
 
-	class UGDFloatingStatusBarWidget* GetFloatingStatusBar();
+	class UGASFloatingStatusBarWidget* GetFloatingStatusBar();
 
 	USkeletalMeshComponent* GetGunComponent() const;
 
@@ -62,10 +62,10 @@ protected:
 	USkeletalMeshComponent* GunComponent;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Gas|UI")
-	TSubclassOf<class UGDFloatingStatusBarWidget> UIFloatingStatusBarClass;
+	TSubclassOf<class UGASFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
 	UPROPERTY()
-	class UGDFloatingStatusBarWidget* UIFloatingStatusBar;
+	class UGASFloatingStatusBarWidget* UIFloatingStatusBar;
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Gas|UI")
 	class UWidgetComponent* UIFloatingStatusBarComponent;

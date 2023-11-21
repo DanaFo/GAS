@@ -5,8 +5,8 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "Animation/AnimInstance.h"
-#include "Characters/Abilities/GDAbilitySystemComponent.h"
-#include "Characters/Abilities/GDGameplayAbility.h"
+#include "Characters/Abilities/GASAbilitySystemComponent.h"
+#include "Characters/Abilities/GASGameplayAbility.h"
 #include "Gas/Gas.h"
 #include "GameFramework/Character.h"
 

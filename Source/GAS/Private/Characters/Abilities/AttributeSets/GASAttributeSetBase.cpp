@@ -139,19 +139,19 @@ void UGASAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCal
 
 				if (Hit)
 				{
-					EGDHitReactDirection HitDirection = TargetCharacter->GetHitReactDirection(Data.EffectSpec.GetContext().GetHitResult()->Location);
+					EGASHitReactDirection HitDirection = TargetCharacter->GetHitReactDirection(Data.EffectSpec.GetContext().GetHitResult()->Location);
 					switch (HitDirection)
 					{
-					case EGDHitReactDirection::Left:
+					case EGASHitReactDirection::Left:
 						TargetCharacter->PlayHitReact(HitDirectionLeftTag, SourceCharacter);
 						break;
-					case EGDHitReactDirection::Front:
+					case EGASHitReactDirection::Front:
 						TargetCharacter->PlayHitReact(HitDirectionFrontTag, SourceCharacter);
 						break;
-					case EGDHitReactDirection::Right:
+					case EGASHitReactDirection::Right:
 						TargetCharacter->PlayHitReact(HitDirectionRightTag, SourceCharacter);
 						break;
-					case EGDHitReactDirection::Back:
+					case EGASHitReactDirection::Back:
 						TargetCharacter->PlayHitReact(HitDirectionBackTag, SourceCharacter);
 						break;
 					}
@@ -165,7 +165,7 @@ void UGASAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCal
 				// Show damage number for the Source player unless it was self damage
 				if (SourceActor != TargetActor)
 				{
-					AGDPlayerController* PC = Cast<AGDPlayerController>(SourceController);
+					AGASPlayerController* PC = Cast<AGASPlayerController>(SourceController);
 					if (PC)
 					{
 						PC->ShowDamageNumber(LocalDamageDone, TargetCharacter);

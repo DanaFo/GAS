@@ -5,7 +5,7 @@
 #include "AbilitySystemComponent.h"
 #include "GameplayTagContainer.h"
 
-Ugasga_FireGun::Ugasga_FireGun()
+UGASGameplayAbility::UGASGameplayAbility()
 {
 	// Default to Instance Per Actor
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
@@ -15,7 +15,7 @@ Ugasga_FireGun::Ugasga_FireGun()
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun")));
 }
 
-void Ugasga_FireGun::OnAvatarSet(const FGameplayAbilityActorInfo * ActorInfo, const FGameplayAbilitySpec & Spec)
+void UGASGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo * ActorInfo, const FGameplayAbilitySpec & Spec)
 {
 	Super::OnAvatarSet(ActorInfo, Spec);
 

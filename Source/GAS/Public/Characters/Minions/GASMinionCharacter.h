@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Characters/GDCharacterBase.h"
+#include "Characters/GASCharacterMain.h"
 #include "GameplayEffectTypes.h"
 #include "GASMinionCharacter.generated.h"
 
@@ -22,19 +22,19 @@ protected:
 
 	// Actual hard pointer to AbilitySystemComponent
 	UPROPERTY()
-	class UGDAbilitySystemComponent* HardRefAbilitySystemComponent;
+	class UGASAbilitySystemComponent* HardRefAbilitySystemComponent;
 
 	// Actual hard pointer to AttributeSetBase
 	UPROPERTY()
-	class UGDAttributeSetBase* HardRefAttributeSetBase;
+	class UGASAttributeSetBase* HardRefAttributeSetBase;
 	
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Gas|UI")
-	TSubclassOf<class UGDFloatingStatusBarWidget> UIFloatingStatusBarClass;
+	TSubclassOf<class UGASFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
 	UPROPERTY()
-	class UGDFloatingStatusBarWidget* UIFloatingStatusBar;
+	class UGASFloatingStatusBarWidget* UIFloatingStatusBar;
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Gas|UI")
 	class UWidgetComponent* UIFloatingStatusBarComponent;

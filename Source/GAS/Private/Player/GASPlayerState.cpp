@@ -9,7 +9,7 @@
 #include "..\..\Public\UI\GASFloatingStatusBarWidget.h"
 #include "..\..\Public\UI\GASHUDWidget.h"
 
-AGDPlayerState::AGDPlayerState()
+AGASPlayerState::AGASPlayerState()
 {
 	// Create ability system component, and set it to be explicitly replicated
 	AbilitySystemComponent = CreateDefaultSubobject<UGASAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
@@ -22,7 +22,7 @@ AGDPlayerState::AGDPlayerState()
 	// Create the attribute set, this replicates by default
 	// Adding it as a subobject of the owning actor of an AbilitySystemComponent
 	// automatically registers the AttributeSet with the AbilitySystemComponent
-	AttributeSetBase = CreateDefaultSubobject<UGDAttributeSetBase>(TEXT("AttributeSetBase"));
+	AttributeSetBase = CreateDefaultSubobject<UGASAttributeSetBase>(TEXT("AttributeSetBase"));
 
 	// Set PlayerState's NetUpdateFrequency to the same as the Character.
 	// Default is very low for PlayerStates and introduces perceived lag in the ability system.
@@ -33,27 +33,27 @@ AGDPlayerState::AGDPlayerState()
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
 }
 
-UAbilitySystemComponent * AGDPlayerState::GetAbilitySystemComponent() const
+UAbilitySystemComponent * AGASPlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
 }
 
-UGDAttributeSetBase * AGDPlayerState::GetAttributeSetBase() const
+UGASAttributeSetBase * AGASPlayerState::GetAttributeSetBase() const
 {
 	return AttributeSetBase;
 }
 
-bool AGDPlayerState::IsAlive() const
+bool AGASPlayerState::IsAlive() const
 {
 	return GetHealth() > 0.0f;
 }
 
-void AGDPlayerState::ShowAbilityConfirmCancelText(bool ShowText)
+void AGASPlayerState::ShowAbilityConfirmCancelText(bool ShowText)
 {
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->ShowAbilityConfirmCancelText(ShowText);
@@ -61,112 +61,112 @@ void AGDPlayerState::ShowAbilityConfirmCancelText(bool ShowText)
 	}
 }
 
-float AGDPlayerState::GetHealth() const
+float AGASPlayerState::GetHealth() const
 {
 	return AttributeSetBase->GetHealth();
 }
 
-float AGDPlayerState::GetMaxHealth() const
+float AGASPlayerState::GetMaxHealth() const
 {
 	return AttributeSetBase->GetMaxHealth();
 }
 
-float AGDPlayerState::GetHealthRegenRate() const
+float AGASPlayerState::GetHealthRegenRate() const
 {
 	return AttributeSetBase->GetHealthRegenRate();
 }
 
-float AGDPlayerState::GetMana() const
+float AGASPlayerState::GetMana() const
 {
 	return AttributeSetBase->GetMana();
 }
 
-float AGDPlayerState::GetMaxMana() const
+float AGASPlayerState::GetMaxMana() const
 {
 	return AttributeSetBase->GetMaxMana();
 }
 
-float AGDPlayerState::GetManaRegenRate() const
+float AGASPlayerState::GetManaRegenRate() const
 {
 	return AttributeSetBase->GetManaRegenRate();
 }
 
-float AGDPlayerState::GetStamina() const
+float AGASPlayerState::GetStamina() const
 {
 	return AttributeSetBase->GetStamina();
 }
 
-float AGDPlayerState::GetMaxStamina() const
+float AGASPlayerState::GetMaxStamina() const
 {
 	return AttributeSetBase->GetMaxStamina();
 }
 
-float AGDPlayerState::GetStaminaRegenRate() const
+float AGASPlayerState::GetStaminaRegenRate() const
 {
 	return AttributeSetBase->GetStaminaRegenRate();
 }
 
-float AGDPlayerState::GetArmor() const
+float AGASPlayerState::GetArmor() const
 {
 	return AttributeSetBase->GetArmor();
 }
 
-float AGDPlayerState::GetMoveSpeed() const
+float AGASPlayerState::GetMoveSpeed() const
 {
 	return AttributeSetBase->GetMoveSpeed();
 }
 
-int32 AGDPlayerState::GetCharacterLevel() const
+int32 AGASPlayerState::GetCharacterLevel() const
 {
 	return AttributeSetBase->GetCharacterLevel();
 }
 
-int32 AGDPlayerState::GetXP() const
+int32 AGASPlayerState::GetXP() const
 {
 	return AttributeSetBase->GetXP();
 }
 
-int32 AGDPlayerState::GetXPBounty() const
+int32 AGASPlayerState::GetXPBounty() const
 {
 	return AttributeSetBase->GetXPBounty();
 }
 
-int32 AGDPlayerState::GetGold() const
+int32 AGASPlayerState::GetGold() const
 {
 	return AttributeSetBase->GetGold();
 }
 
-int32 AGDPlayerState::GetGoldBounty() const
+int32 AGASPlayerState::GetGoldBounty() const
 {
 	return AttributeSetBase->GetGoldBounty();
 }
 
-void AGDPlayerState::BeginPlay()
+void AGASPlayerState::BeginPlay()
 {
 	Super::BeginPlay();
 
 	if (AbilitySystemComponent)
 	{
 		// Attribute change callbacks
-		HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthAttribute()).AddUObject(this, &AGDPlayerState::HealthChanged);
-		MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxHealthAttribute()).AddUObject(this, &AGDPlayerState::MaxHealthChanged);
-		HealthRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthRegenRateAttribute()).AddUObject(this, &AGDPlayerState::HealthRegenRateChanged);
-		ManaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaAttribute()).AddUObject(this, &AGDPlayerState::ManaChanged);
-		MaxManaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxManaAttribute()).AddUObject(this, &AGDPlayerState::MaxManaChanged);
-		ManaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaRegenRateAttribute()).AddUObject(this, &AGDPlayerState::ManaRegenRateChanged);
-		StaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaAttribute()).AddUObject(this, &AGDPlayerState::StaminaChanged);
-		MaxStaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxStaminaAttribute()).AddUObject(this, &AGDPlayerState::MaxStaminaChanged);
-		StaminaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaRegenRateAttribute()).AddUObject(this, &AGDPlayerState::StaminaRegenRateChanged);
-		XPChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetXPAttribute()).AddUObject(this, &AGDPlayerState::XPChanged);
-		GoldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetGoldAttribute()).AddUObject(this, &AGDPlayerState::GoldChanged);
-		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGDPlayerState::CharacterLevelChanged);
+		HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthAttribute()).AddUObject(this, &AGASPlayerState::HealthChanged);
+		MaxHealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxHealthAttribute()).AddUObject(this, &AGASPlayerState::MaxHealthChanged);
+		HealthRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetHealthRegenRateAttribute()).AddUObject(this, &AGASPlayerState::HealthRegenRateChanged);
+		ManaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaAttribute()).AddUObject(this, &AGASPlayerState::ManaChanged);
+		MaxManaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxManaAttribute()).AddUObject(this, &AGASPlayerState::MaxManaChanged);
+		ManaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetManaRegenRateAttribute()).AddUObject(this, &AGASPlayerState::ManaRegenRateChanged);
+		StaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaAttribute()).AddUObject(this, &AGASPlayerState::StaminaChanged);
+		MaxStaminaChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetMaxStaminaAttribute()).AddUObject(this, &AGASPlayerState::MaxStaminaChanged);
+		StaminaRegenRateChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetStaminaRegenRateAttribute()).AddUObject(this, &AGASPlayerState::StaminaRegenRateChanged);
+		XPChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetXPAttribute()).AddUObject(this, &AGASPlayerState::XPChanged);
+		GoldChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetGoldAttribute()).AddUObject(this, &AGASPlayerState::GoldChanged);
+		CharacterLevelChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AttributeSetBase->GetCharacterLevelAttribute()).AddUObject(this, &AGASPlayerState::CharacterLevelChanged);
 
 		// Tag change callbacks
-		AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun")), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGDPlayerState::StunTagChanged);
+		AbilitySystemComponent->RegisterGameplayTagEvent(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun")), EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AGASPlayerState::StunTagChanged);
 	}
 }
 
-void AGDPlayerState::HealthChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::HealthChanged(const FOnAttributeChangeData & Data)
 {
 	float Health = Data.NewValue;
 
@@ -174,7 +174,7 @@ void AGDPlayerState::HealthChanged(const FOnAttributeChangeData & Data)
 	AGASHeroCharacter* Hero = Cast<AGASHeroCharacter>(GetPawn());
 	if (Hero)
 	{
-		UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
+		UGASFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
 		if (HeroFloatingStatusBar)
 		{
 			HeroFloatingStatusBar->SetHealthPercentage(Health / GetMaxHealth());
@@ -194,7 +194,7 @@ void AGDPlayerState::HealthChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::MaxHealthChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::MaxHealthChanged(const FOnAttributeChangeData & Data)
 {
 	float MaxHealth = Data.NewValue;
 
@@ -202,7 +202,7 @@ void AGDPlayerState::MaxHealthChanged(const FOnAttributeChangeData & Data)
 	AGASHeroCharacter* Hero = Cast<AGASHeroCharacter>(GetPawn());
 	if (Hero)
 	{
-		UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
+		UGASFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
 		if (HeroFloatingStatusBar)
 		{
 			HeroFloatingStatusBar->SetHealthPercentage(GetHealth() / MaxHealth);
@@ -210,10 +210,10 @@ void AGDPlayerState::MaxHealthChanged(const FOnAttributeChangeData & Data)
 	}
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetMaxHealth(MaxHealth);
@@ -221,15 +221,15 @@ void AGDPlayerState::MaxHealthChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData & Data)
 {
 	float HealthRegenRate = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetHealthRegenRate(HealthRegenRate);
@@ -237,7 +237,7 @@ void AGDPlayerState::HealthRegenRateChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 {
 	float Mana = Data.NewValue;
 
@@ -245,7 +245,7 @@ void AGDPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 	AGASHeroCharacter* Hero = Cast<AGASHeroCharacter>(GetPawn());
 	if (Hero)
 	{
-		UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
+		UGASFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
 		if (HeroFloatingStatusBar)
 		{
 			HeroFloatingStatusBar->SetManaPercentage(Mana / GetMaxMana());
@@ -256,7 +256,7 @@ void AGDPlayerState::ManaChanged(const FOnAttributeChangeData & Data)
 	// Handled in the UI itself using the AsyncTaskAttributeChanged node as an example how to do it in Blueprint
 }
 
-void AGDPlayerState::MaxManaChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::MaxManaChanged(const FOnAttributeChangeData & Data)
 {
 	float MaxMana = Data.NewValue;
 
@@ -264,7 +264,7 @@ void AGDPlayerState::MaxManaChanged(const FOnAttributeChangeData & Data)
 	AGASHeroCharacter* Hero = Cast<AGASHeroCharacter>(GetPawn());
 	if (Hero)
 	{
-		UGDFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
+		UGASFloatingStatusBarWidget* HeroFloatingStatusBar = Hero->GetFloatingStatusBar();
 		if (HeroFloatingStatusBar)
 		{
 			HeroFloatingStatusBar->SetManaPercentage(GetMana() / MaxMana);
@@ -272,10 +272,10 @@ void AGDPlayerState::MaxManaChanged(const FOnAttributeChangeData & Data)
 	}
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetMaxMana(MaxMana);
@@ -283,15 +283,15 @@ void AGDPlayerState::MaxManaChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::ManaRegenRateChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::ManaRegenRateChanged(const FOnAttributeChangeData & Data)
 {
 	float ManaRegenRate = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetManaRegenRate(ManaRegenRate);
@@ -299,7 +299,7 @@ void AGDPlayerState::ManaRegenRateChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::StaminaChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::StaminaChanged(const FOnAttributeChangeData & Data)
 {
 	float Stamina = Data.NewValue;
 
@@ -307,15 +307,15 @@ void AGDPlayerState::StaminaChanged(const FOnAttributeChangeData & Data)
 	// Handled in the UI itself using the AsyncTaskAttributeChanged node as an example how to do it in Blueprint
 }
 
-void AGDPlayerState::MaxStaminaChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::MaxStaminaChanged(const FOnAttributeChangeData & Data)
 {
 	float MaxStamina = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetMaxStamina(MaxStamina);
@@ -323,15 +323,15 @@ void AGDPlayerState::MaxStaminaChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData & Data)
 {
 	float StaminaRegenRate = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetStaminaRegenRate(StaminaRegenRate);
@@ -339,15 +339,15 @@ void AGDPlayerState::StaminaRegenRateChanged(const FOnAttributeChangeData & Data
 	}
 }
 
-void AGDPlayerState::XPChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::XPChanged(const FOnAttributeChangeData & Data)
 {
 	float XP = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetExperience(XP);
@@ -355,15 +355,15 @@ void AGDPlayerState::XPChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::GoldChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::GoldChanged(const FOnAttributeChangeData & Data)
 {
 	float Gold = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetGold(Gold);
@@ -371,15 +371,15 @@ void AGDPlayerState::GoldChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::CharacterLevelChanged(const FOnAttributeChangeData & Data)
+void AGASPlayerState::CharacterLevelChanged(const FOnAttributeChangeData & Data)
 {
 	float CharacterLevel = Data.NewValue;
 
 	// Update the HUD
-	AGDPlayerController* PC = Cast<AGDPlayerController>(GetOwner());
+	AGASPlayerController* PC = Cast<AGASPlayerController>(GetOwner());
 	if (PC)
 	{
-		UGDHUDWidget* HUD = PC->GetHUD();
+		UGASHUDWidget* HUD = PC->GetHUD();
 		if (HUD)
 		{
 			HUD->SetHeroLevel(CharacterLevel);
@@ -387,7 +387,7 @@ void AGDPlayerState::CharacterLevelChanged(const FOnAttributeChangeData & Data)
 	}
 }
 
-void AGDPlayerState::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+void AGASPlayerState::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
 	if (NewCount > 0)
 	{

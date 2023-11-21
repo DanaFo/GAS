@@ -2,8 +2,8 @@
 
 
 #include "..\..\..\Public\Characters\Abilities\GASDamageExecCalculation.h"
-#include "Characters/Abilities/GDAbilitySystemComponent.h"
-#include "Characters/Abilities/AttributeSets/GDAttributeSetBase.h"
+#include "Characters/Abilities/GASAbilitySystemComponent.h"
+#include "Characters/Abilities/AttributeSets/GASAttributeSetBase.h"
 
 // Declare the attributes to capture and define how we want to capture them from the Source and Target.
 struct GDDamageStatics
@@ -18,10 +18,10 @@ struct GDDamageStatics
 		// We're not capturing anything from the Source in this example, but there could be like AttackPower attributes that you might want.
 
 		// Capture optional Damage set on the damage GE as a CalculationModifier under the ExecutionCalculation
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UGDAttributeSetBase, Damage, Source, true);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UGASAttributeSetBase, Damage, Source, true);
 
 		// Capture the Target's Armor. Don't snapshot.
-		DEFINE_ATTRIBUTE_CAPTUREDEF(UGDAttributeSetBase, Armor, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UGASAttributeSetBase, Armor, Target, false);
 	}
 };
 
@@ -76,10 +76,10 @@ void UGASDamageExecCalculation::Execute_Implementation(const FGameplayEffectCust
 	}
 
 	// Broadcast damages to Target ASC
-	UGDAbilitySystemComponent* TargetASC = Cast<UGDAbilitySystemComponent>(TargetAbilitySystemComponent);
+	UGASAbilitySystemComponent* TargetASC = Cast<UGASAbilitySystemComponent>(TargetAbilitySystemComponent);
 	if (TargetASC)
 	{
-		UGDAbilitySystemComponent* SourceASC = Cast<UGDAbilitySystemComponent>(SourceAbilitySystemComponent);
+		UGASAbilitySystemComponent* SourceASC = Cast<UGASAbilitySystemComponent>(SourceAbilitySystemComponent);
 		TargetASC->ReceiveDamage(SourceASC, UnmitigatedDamage, MitigatedDamage);
 	}
 }

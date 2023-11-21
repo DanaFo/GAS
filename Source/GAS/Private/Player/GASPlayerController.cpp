@@ -35,7 +35,7 @@ void AGASPlayerController::CreateHUD()
 		return;
 	}
 
-	UIHUDWidget = CreateWidget<UGDHUDWidget>(this, UIHUDWidgetClass);
+	UIHUDWidget = CreateWidget<UGASHUDWidget>(this, UIHUDWidgetClass);
 	UIHUDWidget->AddToViewport();
 
 	// Set attributes
@@ -56,7 +56,7 @@ void AGASPlayerController::CreateHUD()
 	UIHUDWidget->SetHeroLevel(PS->GetCharacterLevel());
 }
 
-UGDHUDWidget * AGASPlayerController::GetHUD()
+UGASHUDWidget * AGASPlayerController::GetHUD()
 {
 	return UIHUDWidget;
 }
@@ -65,7 +65,7 @@ void AGASPlayerController::ShowDamageNumber_Implementation(float DamageAmount, A
 {
 	if (TargetCharacter && DamageNumberClass)
 	{
-		UGASDamageTextWidgetComponenteroCharacter* DamageText = NewObject<UGASDamageTextWidgetComponenteroCharacter>(TargetCharacter, DamageNumberClass);
+		UGASDamageTextWidgetComponent* DamageText = NewObject<UGASDamageTextWidgetComponent>(TargetCharacter, DamageNumberClass);
 		DamageText->RegisterComponent();
 		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 		DamageText->SetDamageText(DamageAmount);

@@ -29,8 +29,8 @@ public:
     UPROPERTY(BlueprintAssignable, Category = "GAS|GASCharacter")
     FCharacterBaseHitReactDelegate ShowHitReact;
 
-    // UPROPERTY(BlueprintAssignable, Category = "GAS|GASCharacter")
-    // FCharacterDiedDelegate OnCharacterDied;
+    UPROPERTY(BlueprintAssignable, Category = "GAS|GASCharacter")
+    FCharacterDiedDelegate OnCharacterDied;
 
     // Implement IAbilitySystemInterface
     virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -55,7 +55,7 @@ public:
 
 
     /**
-    * Getters for attributes from GDAttributeSetBase
+    * Getters for attributes from GASAttributeSetBase
     **/
     
     UFUNCTION(BlueprintCallable, Category = "GAS|GASCharacter|Attributes")
@@ -104,7 +104,7 @@ protected:
     // the ASC/AttributeSet from the PlayerState or child classes every time I referenced them in this base class.
 
     TWeakObjectPtr<class UGASAbilitySystemComponent> AbilitySystemComponent;
-    TWeakObjectPtr<class UGDAttributeSetBase> AttributeSetBase;
+    TWeakObjectPtr<class UGASAttributeSetBase> AttributeSetBase;
 
     FGameplayTag HitDirectionFrontTag;
     FGameplayTag HitDirectionBackTag;
@@ -121,8 +121,8 @@ protected:
     UAnimMontage* DeathMontage;
 
     // Default abilities for this Character. These will be removed on Character death and regiven if Character respawns.
-    // UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GAS|Abilities")
-    // TArray<TSubclassOf<class Ugasga_FireGun>> CharacterAbilities;
+     UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GAS|Abilities")
+     TArray<TSubclassOf<class UGASGameplayAbility>> CharacterAbilities;
 
     // Default attributes for a character for initializing on spawn/respawn.
     // This is an instant GE that overrides the values for attributes that get reset on spawn/respawn.

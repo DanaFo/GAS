@@ -156,7 +156,7 @@ void AGASHeroCharacter::FinishDying()
 {
 	if (GetLocalRole() == ROLE_Authority)
 	{
-		AGASDocumentationGameMode* GM = Cast<AGASDocumentationGameMode>(GetWorld()->GetAuthGameMode());
+		AGASGameMode* GM = Cast<AGASGameMode>(GetWorld()->GetAuthGameMode());
 
 		if (GM)
 		{
@@ -246,12 +246,12 @@ void AGASHeroCharacter::InitializeFloatingStatusBar()
 	}
 
 	// Setup UI for Locally Owned Players only, not AI or the server's copy of the PlayerControllers
-	AGDPlayerController* PC = Cast<AGDPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	AGASPlayerController* PC = Cast<AGASPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (PC && PC->IsLocalPlayerController())
 	{
 		if (UIFloatingStatusBarClass)
 		{
-			UIFloatingStatusBar = CreateWidget<UGDFloatingStatusBarWidget>(PC, UIFloatingStatusBarClass);
+			UIFloatingStatusBar = CreateWidget<UGASFloatingStatusBarWidget>(PC, UIFloatingStatusBarClass);
 			if (UIFloatingStatusBar && UIFloatingStatusBarComponent)
 			{
 				UIFloatingStatusBarComponent->SetWidget(UIFloatingStatusBar);
@@ -288,7 +288,7 @@ void AGASHeroCharacter::OnRep_PlayerState()
 		// For now assume possession = spawn/respawn.
 		InitializeAttributes();
 
-		AGDPlayerController* PC = Cast<AGDPlayerController>(GetController());
+		AGASPlayerController* PC = Cast<AGASPlayerController>(GetController());
 		if (PC)
 		{
 			PC->CreateHUD();
@@ -314,9 +314,9 @@ void AGASHeroCharacter::BindASCInput()
 {
 	if (!ASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
 	{
-		FTopLevelAssetPath AbilityEnumAssetPath = FTopLevelAssetPath(FName("/Script/Gas"), FName("EGDAbilityInputID"));
+		FTopLevelAssetPath AbilityEnumAssetPath = FTopLevelAssetPath(FName("/Script/Gas"), FName("EGASAbilityInputID"));
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"),
-			FString("CancelTarget"), AbilityEnumAssetPath, static_cast<int32>(EGDAbilityInputID::Confirm), static_cast<int32>(EGDAbilityInputID::Cancel)));
+			FString("CancelTarget"), AbilityEnumAssetPath, static_cast<int32>(EGASAbilityInputID::Confirm), static_cast<int32>(EGASAbilityInputID::Cancel)));
 
 		ASCInputBound = true;
 	}

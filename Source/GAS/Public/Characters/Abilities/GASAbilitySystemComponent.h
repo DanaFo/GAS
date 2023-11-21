@@ -6,13 +6,13 @@
 #include "AbilitySystemComponent.h"
 #include "GASAbilitySystemComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, UGASGameplayAbility*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReceivedDamageDelegate, UGASAbilitySystemComponent*, SourceASC, float, UnmitigatedDamage, float, MitigatedDamage);
 
 /**
  * 
  */
 UCLASS()
-class GAS_API UGASGameplayAbilitySystemComponent : public UAbilitySystemComponent
+class GAS_API UGASAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 	

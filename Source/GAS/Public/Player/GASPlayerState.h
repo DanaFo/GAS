@@ -32,7 +32,7 @@ public:
 
 
 	/**
-	* Getters for attributes from GDAttributeSetBase. Returns Current Value unless otherwise specified.
+	* Getters for attributes from GASAttributeSetBase. Returns Current Value unless otherwise specified.
 	*/
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|GASPlayerState|Attributes")
@@ -85,7 +85,7 @@ public:
 
 protected:
 	UPROPERTY()
-	class UGASGameplayAbilitySystemComponent* AbilitySystemComponent;
+	class UGASAbilitySystemComponent* AbilitySystemComponent;
 
 	UPROPERTY()
 	class UGASAttributeSetBase* AttributeSetBase;

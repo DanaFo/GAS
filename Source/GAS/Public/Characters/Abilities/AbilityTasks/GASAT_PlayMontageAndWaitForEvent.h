@@ -6,7 +6,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "GASAT_PlayMontageAndWaitForEvent.generated.h"
 
-class UGDAbilitySystemComponent;
+class UGASAbilitySystemComponent;
 
 /** Delegate type used, EventTag and Payload may be empty if it came from the montage callbacks */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGDPlayMontageAndWaitForEventDelegate, FGameplayTag, EventTag, FGameplayEventData, EventData);

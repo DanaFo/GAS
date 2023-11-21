@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Characters/Abilities/GASGameplayAbility.h"
-#include "..\..\Abilities\AbilityTasks\GASAT_PlayMontageAndWaitForEvent.h"
+#include "Characters/Abilities/AbilityTasks/GASAT_PlayMontageAndWaitForEvent.h"
 #include "Characters/GASProjectile.h"
 #include "GASGA_FireGun.generated.h"
 

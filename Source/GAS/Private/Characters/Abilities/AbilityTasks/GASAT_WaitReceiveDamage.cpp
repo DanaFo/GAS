@@ -2,7 +2,7 @@
 
 
 #include "..\..\..\..\Public\Characters\Abilities\AbilityTasks\GASAT_WaitReceiveDamage.h"
-#include "Characters/Abilities/GDAbilitySystemComponent.h"
+#include "Characters/Abilities/GASAbilitySystemComponent.h"
 
 UGASAT_WaitReceiveDamage::UGASAT_WaitReceiveDamage(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -19,27 +19,27 @@ UGASAT_WaitReceiveDamage* UGASAT_WaitReceiveDamage::WaitReceiveDamage(UGameplayA
 
 void UGASAT_WaitReceiveDamage::Activate()
 {
-	UGDAbilitySystemComponent* GDASC = Cast<UGDAbilitySystemComponent>(AbilitySystemComponent);
+	UGASAbilitySystemComponent* GASASC = Cast<UGASAbilitySystemComponent>(AbilitySystemComponent);
 
-	if (GDASC)
+	if (GASASC)
 	{
-		GDASC->ReceivedDamage.AddDynamic(this, &UGASAT_WaitReceiveDamage::OnDamageReceived);
+		GASASC->ReceivedDamage.AddDynamic(this, &UGASAT_WaitReceiveDamage::OnDamageReceived);
 	}
 }
 
 void UGASAT_WaitReceiveDamage::OnDestroy(bool AbilityIsEnding)
 {
-	UGDAbilitySystemComponent* GDASC = Cast<UGDAbilitySystemComponent>(AbilitySystemComponent);
+	UGASAbilitySystemComponent* GASASC = Cast<UGASAbilitySystemComponent>(AbilitySystemComponent);
 
-	if (GDASC)
+	if (GASASC)
 	{
-		GDASC->ReceivedDamage.RemoveDynamic(this, &UGASAT_WaitReceiveDamage::OnDamageReceived);
+		GASASC->ReceivedDamage.RemoveDynamic(this, &UGASAT_WaitReceiveDamage::OnDamageReceived);
 	}
 
 	Super::OnDestroy(AbilityIsEnding);
 }
 
-void UGASAT_WaitReceiveDamage::OnDamageReceived(UGDAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage)
+void UGASAT_WaitReceiveDamage::OnDamageReceived(UGASAbilitySystemComponent* SourceASC, float UnmitigatedDamage, float MitigatedDamage)
 {
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
